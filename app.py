@@ -5,7 +5,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)  # Enable CORS for local development
 
-# MongoDB connection
+# MongoDB connection - hardcoded (not recommended for production)
 client = MongoClient("mongodb+srv://contactzcsco:Z3r0c0575k1ll%4066202@zcsproduction.zld0i.mongodb.net/?retryWrites=true&w=majority&appName=ZCSProduction")
 db = client['NCCDatabase']
 camp_collection = db['Camps']
@@ -17,7 +17,7 @@ def get_camps():
         # Query to find all camps and sort by date in descending order
         camps = camp_collection.find({}, {'_id': 0}).sort("date", -1)
         camp_list = list(camps)
-        return jsonify(camp_list)
+        return jsonify(camp_list), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -59,4 +59,4 @@ def delete_camp(camp_name):
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=False)  # Set debug to False for production
