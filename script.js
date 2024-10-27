@@ -9,7 +9,7 @@ $(document).ready(async function() {
         $('#camp-list').empty();
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/camps');
+            const response = await fetch('https://qa-events.onrender.com/api/camps');
             if (!response.ok) throw new Error('Failed to fetch data');
             
             const camps = await response.json();

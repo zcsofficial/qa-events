@@ -79,7 +79,7 @@
             $('#error-message').addClass('d-none');
 
             $.ajax({
-                url: 'http://127.0.0.1:5000/api/camps',
+                url: 'https://qa-events.onrender.com/api/camps',
                 method: 'GET',
                 success: function(data) {
                     renderCamps(data);

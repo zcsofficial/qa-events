@@ -13,7 +13,7 @@ $(document).ready(function() {
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/camps', {
+            const response = await fetch('https://qa-events.onrender.com/api/camps', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ $(document).ready(function() {
     async function fetchCamps() {
         $('#camp-tbody').empty();  // Clear existing camp list
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/camps');
+            const response = await fetch('https://qa-events.onrender.com/api/camps');
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -107,7 +107,7 @@ $(document).ready(function() {
             const updatedData = { status: newStatus };
 
             try {
-                const response = await fetch(`http://127.0.0.1:5000/api/camps/${campName}`, {
+                const response = await fetch(`https://qa-events.onrender.com/api/camps/${campName}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -134,7 +134,7 @@ $(document).ready(function() {
     async function deleteCamp(campName) {
         if (confirm(`Are you sure you want to delete the camp "${campName}"?`)) {
             try {
-                const response = await fetch(`http://127.0.0.1:5000/api/camps/${campName}`, {
+                const response = await fetch(`https://qa-events.onrender.com/api/camps/${campName}`, {
                     method: 'DELETE'
                 });
 
