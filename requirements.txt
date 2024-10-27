@@ -1,0 +1,4 @@
+Flask==2.3.3
+Flask-CORS==3.0.10
+pymongo==4.3.3
+dnspython==2.2.1  # Necessary for MongoDB Atlas connection
