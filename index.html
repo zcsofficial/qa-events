@@ -73,6 +73,27 @@
     <script src="script.js"></script>
 
     <script>
+        let currentCampCount = 0; // Track the number of camps currently displayed
+
+        // Request notification permission
+        function requestNotificationPermission() {
+            if (Notification.permission !== "granted") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        Swal.fire('Notifications Enabled', 'You will receive notifications for new camps!', 'success');
+                    }
+                });
+            }
+        }
+
+        // Function to display a notification
+        function showNotification(camp) {
+            const notification = new Notification("New Camp Added!", {
+                body: `A new camp "${camp.name}" has been added.`,
+                icon: "https://your-icon-url.com/icon.png" // Replace with a valid icon URL
+            });
+        }
+
         // Fetch camps on initial load and when refreshing
         function fetchCamps() {
             $('#loading-message').removeClass('d-none');
@@ -114,6 +135,20 @@
                 "responsive": true,
                 "destroy": true // Allows DataTable to be reinitialized
             });
+
+            // Check if new camps have been added
+            checkForNewCamps(camps);
+        }
+
+        // Check for new camps
+        function checkForNewCamps(camps) {
+            const newCampCount = camps.length;
+            if (newCampCount > currentCampCount) {
+                const newCamps = camps.slice(currentCampCount, newCampCount); // Get the new camps
+                newCamps.forEach(showNotification); // Show notification for each new camp
+                Swal.fire('New Camp Added!', 'A new camp has been added to the database.', 'success');
+            }
+            currentCampCount = newCampCount; // Update the current count
         }
 
         // Refresh data
@@ -121,8 +156,12 @@
             fetchCamps();
         }
 
+        // Polling for new camps every 10 seconds
+        setInterval(fetchCamps, 10000); // Adjust the interval as needed
+
         // Initial load
         $(document).ready(function() {
+            requestNotificationPermission(); // Request permission for notifications
             fetchCamps();
         });
     </script>
